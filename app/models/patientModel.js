@@ -6,7 +6,7 @@ const saltRounds = 10;
 const Schema = mongoose.Schema;
 //
 // Define a new 'UserSchema'
-var StudentSchema = new Schema({
+var PatientSchema = new Schema({
   password: {
     type: String,
     required: true,
@@ -37,7 +37,7 @@ var StudentSchema = new Schema({
 });
 
 // Set the 'fullname' virtual property
-StudentSchema.virtual("fullName")
+PatientSchema.virtual("fullName")
   .get(function () {
     return this.firstName + " " + this.lastName;
   })
@@ -48,10 +48,10 @@ StudentSchema.virtual("fullName")
   });
 
 // Configure the 'UserSchema' to use getters and virtuals when transforming to JSON
-StudentSchema.set("toJSON", {
+PatientSchema.set("toJSON", {
   getters: true,
   virtuals: true,
 });
 
 // Create the 'User' model out of the 'UserSchema'
-module.exports = mongoose.model("Student", StudentSchema);
+module.exports = mongoose.model("Patient", PatientSchema);

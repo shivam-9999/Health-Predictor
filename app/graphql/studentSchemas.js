@@ -3,7 +3,7 @@ var GraphQLList = require("graphql").GraphQLList;
 var GraphQLNonNull = require("graphql").GraphQLNonNull;
 var GraphQLString = require("graphql").GraphQLString;
 var GraphQLInt = require("graphql").GraphQLInt;
-var StudentModel = require("../models/studentModel");
+var PatientModel = require("../models/patientModel");
 const config = require("../../config/config");
 const jwtExpirySeconds = 300;
 const jwtKey = config.secretKey;
@@ -53,7 +53,7 @@ const queryType = {
   students: {
     type: new GraphQLList(studentType),
     resolve: function () {
-      const students = StudentModel.find().exec();
+      const students = PatientModel.find().exec();
       if (!students) {
         throw new Error("Students not found");
       }
@@ -69,7 +69,7 @@ const queryType = {
       },
     },
     resolve: function (root, params) {
-      const student = StudentModel.findById(params.id).exec();
+      const student = PatientModel.findById(params.id).exec();
       if (!student) {
         throw new Error("Student not found");
       }
@@ -110,12 +110,12 @@ const Mutation = {
     resolve: async (root, params) => {
       const hashed = await bcrypt.hashSync(params.password, 10);
 
-      const studentModel = new StudentModel({
+      const patientModel = new PatientModel({
         ...params,
         password: hashed,
       });
 
-      const newStudent = studentModel.save();
+      const newStudent = patientModel.save();
       if (!newStudent) {
         throw new Error("Could not save the student!");
       }
@@ -134,7 +134,7 @@ const Mutation = {
       },
     },
     resolve: async (root, params) => {
-      const user = await StudentModel.findOne({
+      const user = await PatientModel.findOne({
         email: params.email,
       }).exec();
       console.log(user, user);
@@ -187,7 +187,7 @@ const Mutation = {
       },
     },
     resolve(root, params) {
-      return StudentModel.findByIdAndUpdate(
+      return PatientModel.findByIdAndUpdate(
         params.id,
         {
           // studentNo: params.studentNo,
@@ -213,7 +213,7 @@ const Mutation = {
       },
     },
     resolve(root, params) {
-      const deleteStudent = StudentModel.findByIdAndRemove(params.id).exec();
+      const deleteStudent = PatientModel.findByIdAndRemove(params.id).exec();
       if (!deleteStudent) {
         throw new Error("Could not delete the student!");
       }

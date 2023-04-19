@@ -4,7 +4,7 @@ var GraphQLNonNull = require("graphql").GraphQLNonNull;
 var GraphQLString = require("graphql").GraphQLString;
 const mongoose = require("mongoose");
 
-var StudentModel = require("../models/studentModel");
+var StudentModel = require("../models/patientModel");
 var CourseModel = require("../models/courseModel");
 
 const courseType = new GraphQLObjectType({
