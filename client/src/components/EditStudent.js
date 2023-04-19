@@ -11,12 +11,11 @@ const GET_STUDENTS = gql`
 
       firstName
       lastName
-      program
+
       address
       city
       phoneNumber
       email
-      program
     }
   }
 `;
@@ -30,7 +29,6 @@ export const UpdateStudent = gql`
     $city: String!
     $phoneNumber: String!
     $email: String!
-    $program: String!
   ) {
     updateStudent(
       id: $id
@@ -41,7 +39,6 @@ export const UpdateStudent = gql`
       city: $city
       phoneNumber: $phoneNumber
       email: $email
-      program: $program
     ) {
       _id
     }
@@ -60,7 +57,6 @@ const EditStudent = () => {
     city,
     phoneNumber,
     email,
-    program,
     // studentNo,
     password;
 
@@ -85,7 +81,6 @@ const EditStudent = () => {
               city: city.value,
               phoneNumber: phoneNumber.value,
               email: email.value,
-              program: program.value,
 
               password: password.value,
             },
@@ -102,8 +97,7 @@ const EditStudent = () => {
           city.value = "";
           phoneNumber.value = "";
           email.value = "";
-          program.value = "";
-          // studentNo.value = "";
+
           password.value = "";
 
           let path = `/list`;
@@ -231,21 +225,6 @@ const EditStudent = () => {
               email = node;
             }}
             // onChange={(e) => setemail(e.target.value)}
-          />
-        </Form.Group>
-
-        <Form.Group>
-          <Form.Label>Program</Form.Label>
-          <Form.Control
-            type="text"
-            name="program"
-            id="program"
-            placeholder="Enter program"
-            defaultValue={studentInfo?.data?.student?.program}
-            ref={(node) => {
-              program = node;
-            }}
-            // onChange={(e) => setprogram(e.target.value)}
           />
         </Form.Group>
 

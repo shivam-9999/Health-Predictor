@@ -166,18 +166,6 @@ const CreateStudent = () => {
             />
           </Form.Group>
 
-          {/* <Form.Group>
-            <Form.Label>Program</Form.Label>
-            <Form.Control
-              type="text"
-              name="program"
-              id="program"
-              placeholder="Enter program "
-              ref={(node) => {
-                program = node;
-              }}
-            />
-          </Form.Group> */}
           <Button variant="primary" type="submit">
             Save
           </Button>

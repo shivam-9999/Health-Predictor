@@ -23,7 +23,6 @@ const UserLogin = () => {
   const [password, setPassword] = useState("");
 
   const [login, { loading, error, data }] = useMutation(LOGIN);
-  console.log(password);
   if (error) {
     return `Login Failed! ${error.message}`;
     history.push(`/login`);
@@ -39,11 +38,11 @@ const UserLogin = () => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          justifyContent: "space-evenly",
+          justifyContent: "space-between",
         }}
       >
         <div>
-          Student No : &nbsp;&nbsp;&nbsp;
+          Email :
           <input
             value={email}
             onChange={(event) => setemail(event.target.value)}
@@ -52,7 +51,7 @@ const UserLogin = () => {
         </div>
         {/* Input box to input email */}
         <div>
-          Password :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          Password :
           <input
             type="password"
             value={password}

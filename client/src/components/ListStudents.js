@@ -57,11 +57,6 @@ const ListStudents = () => {
       dataIndex: "email",
       key: "email",
     },
-    // {
-    //   title: "program",
-    //   dataIndex: "program",
-    //   key: "program",
-    // },
 
     {
       title: "Mutate",

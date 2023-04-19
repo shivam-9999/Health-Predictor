@@ -41,9 +41,7 @@ const studentType = new GraphQLObjectType({
       email: {
         type: GraphQLString,
       },
-      // program: {
-      //   type: GraphQLString,
-      // },
+
       token: {
         type: GraphQLString,
       },
@@ -108,9 +106,6 @@ const Mutation = {
       email: {
         type: new GraphQLNonNull(GraphQLString),
       },
-      // program: {
-      //   type: new GraphQLNonNull(GraphQLString),
-      // },
     },
     resolve: async (root, params) => {
       const hashed = await bcrypt.hashSync(params.password, 10);
@@ -190,9 +185,6 @@ const Mutation = {
       email: {
         type: GraphQLString,
       },
-      // program: {
-      //   type: GraphQLString,
-      // },
     },
     resolve(root, params) {
       return StudentModel.findByIdAndUpdate(
@@ -205,7 +197,6 @@ const Mutation = {
           city: params.city,
           phoneNumber: params.phoneNumber,
           email: params.email,
-          // program: params.program,
         },
         function (err) {
           if (err) return next(err);

@@ -39,7 +39,7 @@ function App() {
             <div style={{ display: "flex" }}>
               <Nav.Link href="/home">Home</Nav.Link>
               <Nav.Link href="/list" style={{ width: "150px" }}>
-                List of Students
+                List of Clients
               </Nav.Link>
               <Nav.Link href="/listCourses">List of Courses</Nav.Link>
             </div>

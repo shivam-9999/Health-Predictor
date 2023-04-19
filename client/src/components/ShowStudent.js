@@ -39,7 +39,6 @@ function ShowStudent(props) {
       city: data.city,
       phoneNumber: data.phoneNumber,
       email: data.email,
-      program: data.program,
     };
 
     axios
@@ -67,7 +66,6 @@ function ShowStudent(props) {
         <p>City: {data.city}</p>
         <p>Phone Number: {data.phoneNumber}</p>
         <p>Email: {data.email}</p>
-        <p>Program: {data.program}</p>
 
         <p>
           <Button

@@ -34,15 +34,6 @@ var StudentSchema = new Schema({
     trim: true,
     unique: [true, "email number must be unique"],
   },
-  // program: {
-  //   type: String,
-  // },
-  // courses: [
-  //   {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: "Student",
-  //   },
-  // ],
 });
 
 // Set the 'fullname' virtual property
