@@ -11,19 +11,19 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import "./App.css";
 //
-import ListStudents from "./components/ListStudents";
+// import ListStudents from "./components/ListStudents";
 import ListCourses from "./components/ListCourses";
-import EditStudent from "./components/EditStudent";
+// import EditStudent from "./components/EditStudent";
 import EditCourse from "./components/EditCourse";
 
-import CreateStudent from "./components/CreateStudent";
+import CreatePatient from "./components/CreatePatient";
 import ShowStudent from "./components/ShowStudent";
 import ShowCourse from "./components/ShowCourse";
 
 import Home from "./components/Home";
 import Login from "./components/Login";
 import CreateCourse from "./components/CreateCourse";
-import Deletestudent from "./components/DeleteStudent";
+// import Deletestudent from "./components/DeleteStudent";
 import DeleteCourse from "./components/DeleteCourse";
 //
 function App() {
@@ -55,11 +55,11 @@ function App() {
         <Route render={() => <Home />} path="/home" />
         <Route render={() => <Login />} path="/login" />
 
-        <Route render={() => <CreateStudent />} path="/create" />
-        <Route render={() => <ListStudents />} path="/list" />
-        <Route render={() => <EditStudent />} path="/updateStudent/:id" />
+        <Route render={() => <CreatePatient />} path="/create" />
+        {/* <Route render={() => <ListStudents />} path="/list" /> */}
+        {/* <Route render={() => <EditStudent />} path="/updateStudent/:id" /> */}
         <Route render={() => <ShowStudent />} path="/show/:id" />
-        <Route render={() => <Deletestudent />} path="/deletestudent/:id" />
+        {/* <Route render={() => <Deletestudent />} path="/deletestudent/:id" /> */}
 
         <Route render={() => <CreateCourse />} path="/createcourse" />
         <Route render={() => <ListCourses />} path="/listCourses" />
