@@ -28,6 +28,9 @@ const healthType = new GraphQLObjectType({
       respiratoryRate: {
         type: GraphQLString,
       },
+      commonSymptoms: {
+        type: new GraphQLList(GraphQLString),
+      },
     };
   },
 });
@@ -80,6 +83,9 @@ const Mutation = {
       respiratoryRate: {
         type: new GraphQLNonNull(GraphQLString),
       },
+      commonSymptoms: {
+        type: new GraphQLList(GraphQLString),
+      },
     },
     resolve: function (root, params) {
       const healthModel = new HealthModel(params);
@@ -92,6 +98,7 @@ const Mutation = {
     },
   },
 };
+
 module.exports = {
   healthQuery: queryType,
   healthMutation: Mutation,

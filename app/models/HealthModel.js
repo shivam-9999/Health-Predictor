@@ -22,6 +22,24 @@ const HealthSchema = new Schema({
     type: Number,
     required: [true, "Please add a respiratory rate"],
   },
+  commonSymptoms: [
+    {
+      type: String,
+      enum: [
+        "Fever",
+        "Cough",
+        "Shortness of breath",
+        "Fatigue",
+        "Body aches",
+        "Loss of taste or smell",
+        "Sore throat",
+        "Headache",
+        "Runny or stuffy nose",
+        "Nausea or vomiting",
+        "Diarrhea",
+      ],
+    },
+  ],
 });
 
 module.exports = mongoose.model("Health", HealthSchema);
