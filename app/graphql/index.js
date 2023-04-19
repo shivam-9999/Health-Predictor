@@ -4,6 +4,7 @@ var GraphQLObjectType = require("graphql").GraphQLObjectType;
 var { studentQuery, studentMutation } = require("./patientSchemas.js");
 
 var { courseQuery, courseMutation } = require("./courseSchemas.js");
+var { healthQuery, healthMutation } = require("./HealthSchemas.js");
 
 const queryType = new GraphQLObjectType({
   name: "Query",
@@ -11,6 +12,7 @@ const queryType = new GraphQLObjectType({
     return {
       ...studentQuery,
       ...courseQuery,
+      ...healthQuery,
     };
   },
 });
@@ -21,6 +23,7 @@ const mutation = new GraphQLObjectType({
     return {
       ...studentMutation,
       ...courseMutation,
+      ...healthMutation,
     };
   },
 });

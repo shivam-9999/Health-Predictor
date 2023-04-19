@@ -109,57 +109,57 @@ const Mutation = {
     },
   },
 
-  updateCourse: {
-    type: courseType,
-    args: {
-      id: {
-        name: "id",
-        type: new GraphQLNonNull(GraphQLString),
-      },
-      courseCode: {
-        type: new GraphQLNonNull(GraphQLString),
-      },
-      courseName: {
-        type: new GraphQLNonNull(GraphQLString),
-      },
-      courseSection: {
-        type: new GraphQLNonNull(GraphQLString),
-      },
-      courseSemester: {
-        type: new GraphQLNonNull(GraphQLString),
-      },
-    },
-    resolve(root, params) {
-      return CourseModel.findByIdAndUpdate(
-        params.id,
-        {
-          courseCode: params.courseCode,
-          courseName: params.courseName,
-          courseSection: params.courseSection,
-          courseSemester: params.courseSemester,
-        },
-        function (err) {
-          if (err) return next(err);
-        }
-      );
-    },
-  },
+  // updateCourse: {
+  //   type: courseType,
+  //   args: {
+  //     id: {
+  //       name: "id",
+  //       type: new GraphQLNonNull(GraphQLString),
+  //     },
+  //     courseCode: {
+  //       type: new GraphQLNonNull(GraphQLString),
+  //     },
+  //     courseName: {
+  //       type: new GraphQLNonNull(GraphQLString),
+  //     },
+  //     courseSection: {
+  //       type: new GraphQLNonNull(GraphQLString),
+  //     },
+  //     courseSemester: {
+  //       type: new GraphQLNonNull(GraphQLString),
+  //     },
+  //   },
+  //   resolve(root, params) {
+  //     return CourseModel.findByIdAndUpdate(
+  //       params.id,
+  //       {
+  //         courseCode: params.courseCode,
+  //         courseName: params.courseName,
+  //         courseSection: params.courseSection,
+  //         courseSemester: params.courseSemester,
+  //       },
+  //       function (err) {
+  //         if (err) return next(err);
+  //       }
+  //     );
+  //   },
+  // },
 
-  deleteCourse: {
-    type: courseType,
-    args: {
-      id: {
-        type: new GraphQLNonNull(GraphQLString),
-      },
-    },
-    resolve(root, params) {
-      const deleteCourse = CourseModel.findByIdAndRemove(params.id).exec();
-      if (!deleteCourse) {
-        throw new Error("Could not delete the course!");
-      }
-      return deleteCourse;
-    },
-  },
+  // deleteCourse: {
+  //   type: courseType,
+  //   args: {
+  //     id: {
+  //       type: new GraphQLNonNull(GraphQLString),
+  //     },
+  //   },
+  //   resolve(root, params) {
+  //     const deleteCourse = CourseModel.findByIdAndRemove(params.id).exec();
+  //     if (!deleteCourse) {
+  //       throw new Error("Could not delete the course!");
+  //     }
+  //     return deleteCourse;
+  //   },
+  // },
 };
 
 module.exports = {
