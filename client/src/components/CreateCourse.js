@@ -26,7 +26,7 @@ export const AddCourse = gql`
 `;
 
 const CreateCourse = () => {
-  let studentNo, courseCode, courseName, courseSection, courseSemester;
+  let courseCode, courseName, courseSection, courseSemester;
   const [createCourse, { data, loading, error }] = useMutation(AddCourse);
   const history = useHistory();
   if (loading) return "Submitting...";

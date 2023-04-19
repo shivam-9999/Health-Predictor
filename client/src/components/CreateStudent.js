@@ -1,33 +1,27 @@
 import React, { useState } from "react";
 import { gql, useMutation } from "@apollo/client";
+import { withRouter, useHistory } from "react-router-dom";
 import Spinner from "react-bootstrap/Spinner";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { withRouter, useHistory } from "react-router-dom";
 
 export const SIGN_UP = gql`
   mutation (
-    $studentNo: String!
     $firstName: String!
     $lastName: String!
     $password: String!
     $address: String!
-    $city: String!
     $phoneNumber: String!
     $email: String!
-    $program: String!
   ) {
     signUp(
-      studentNo: $studentNo
       firstName: $firstName
       lastName: $lastName
       password: $password
       address: $address
-      city: $city
       phoneNumber: $phoneNumber
       email: $email
-      program: $program
     ) {
       _id
     }
@@ -35,15 +29,7 @@ export const SIGN_UP = gql`
 `;
 
 const CreateStudent = () => {
-  let studentNo,
-    password,
-    firstName,
-    lastName,
-    address,
-    city,
-    phoneNumber,
-    email,
-    program;
+  let password, firstName, lastName, address, phoneNumber, email;
   const [signUp, { data, loading, error }] = useMutation(SIGN_UP);
 
   const history = useHistory();
@@ -57,32 +43,27 @@ const CreateStudent = () => {
           onSubmit={(e) => {
             signUp({
               variables: {
-                studentNo: studentNo.value,
                 password: password.value,
                 firstName: firstName.value,
                 lastName: lastName.value,
                 address: address.value,
-                city: city.value,
                 phoneNumber: phoneNumber.value,
                 email: email.value,
-                program: program.value,
               },
             });
-            studentNo.value = "";
+
             password.value = "";
             firstName.value = "";
             lastName.value = "";
             address.value = "";
-            city.value = "";
             phoneNumber.value = "";
             email.value = "";
-            program.value = "";
 
             let path = `/list`;
             history.push(path);
           }}
         >
-          <Form.Group>
+          {/* <Form.Group>
             <Form.Label> Student Number</Form.Label>
             <Form.Control
               type="text"
@@ -91,6 +72,18 @@ const CreateStudent = () => {
               placeholder="Enter studentNo"
               ref={(node) => {
                 studentNo = node;
+              }}
+            />
+          </Form.Group> */}
+          <Form.Group>
+            <Form.Label>Email</Form.Label>
+            <Form.Control
+              type="text"
+              name="email"
+              id="email"
+              placeholder="Enter email"
+              ref={(node) => {
+                email = node;
               }}
             />
           </Form.Group>
@@ -147,7 +140,7 @@ const CreateStudent = () => {
             />
           </Form.Group>
 
-          <Form.Group>
+          {/* <Form.Group>
             <Form.Label>City</Form.Label>
             <Form.Control
               type="text"
@@ -158,7 +151,7 @@ const CreateStudent = () => {
                 city = node;
               }}
             />
-          </Form.Group>
+          </Form.Group> */}
 
           <Form.Group>
             <Form.Label>Phone Number</Form.Label>
@@ -173,20 +166,7 @@ const CreateStudent = () => {
             />
           </Form.Group>
 
-          <Form.Group>
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-              type="text"
-              name="email"
-              id="email"
-              placeholder="Enter email"
-              ref={(node) => {
-                email = node;
-              }}
-            />
-          </Form.Group>
-
-          <Form.Group>
+          {/* <Form.Group>
             <Form.Label>Program</Form.Label>
             <Form.Control
               type="text"
@@ -197,7 +177,7 @@ const CreateStudent = () => {
                 program = node;
               }}
             />
-          </Form.Group>
+          </Form.Group> */}
           <Button variant="primary" type="submit">
             Save
           </Button>

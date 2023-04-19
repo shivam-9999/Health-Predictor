@@ -8,7 +8,7 @@ const GET_STUDENTS = gql`
   query ($id: String!) {
     student(id: $id) {
       _id
-      studentNo
+
       firstName
       lastName
       program
@@ -24,7 +24,6 @@ const GET_STUDENTS = gql`
 export const UpdateStudent = gql`
   mutation updateStudent(
     $id: String!
-    $studentNo: String!
     $firstName: String!
     $lastName: String!
     $address: String!
@@ -35,7 +34,7 @@ export const UpdateStudent = gql`
   ) {
     updateStudent(
       id: $id
-      studentNo: $studentNo
+
       firstName: $firstName
       lastName: $lastName
       address: $address
@@ -62,7 +61,7 @@ const EditStudent = () => {
     phoneNumber,
     email,
     program,
-    studentNo,
+    // studentNo,
     password;
 
   console.log(firstName);
@@ -87,7 +86,7 @@ const EditStudent = () => {
               phoneNumber: phoneNumber.value,
               email: email.value,
               program: program.value,
-              studentNo: studentNo.value,
+
               password: password.value,
             },
           })
@@ -104,7 +103,7 @@ const EditStudent = () => {
           phoneNumber.value = "";
           email.value = "";
           program.value = "";
-          studentNo.value = "";
+          // studentNo.value = "";
           password.value = "";
 
           let path = `/list`;
@@ -112,7 +111,7 @@ const EditStudent = () => {
         }}
         className="form"
       >
-        <Form.Group>
+        {/* <Form.Group>
           <Form.Label> Student Number</Form.Label>
           <Form.Control
             type="text"
@@ -127,7 +126,7 @@ const EditStudent = () => {
             // value={studentNo}
             // onChange={(e) => setstudentNo(e.target.value)}
           />
-        </Form.Group>
+        </Form.Group> */}
 
         <Form.Group>
           <Form.Label>Password</Form.Label>
@@ -140,7 +139,6 @@ const EditStudent = () => {
             ref={(node) => {
               password = node;
             }}
-            // onChange={(e) => setstudentNo(e.target.value)}
           />
         </Form.Group>
 
@@ -242,7 +240,7 @@ const EditStudent = () => {
             type="text"
             name="program"
             id="program"
-            placeholder="Enter program "
+            placeholder="Enter program"
             defaultValue={studentInfo?.data?.student?.program}
             ref={(node) => {
               program = node;

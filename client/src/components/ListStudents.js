@@ -8,33 +8,25 @@ const GET_STUDENTS = gql`
   {
     students {
       _id
-      studentNo
+
       firstName
       lastName
-      program
+
       address
-      city
+
       phoneNumber
       email
-      program
     }
   }
 `;
 
-const ListStudents = (props) => {
-  // const record = props?.location?.query?.record;
-  // console.log(record);
+const ListStudents = () => {
   const { loading, error, data, refetch } = useQuery(GET_STUDENTS);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :</p>;
 
   const columns = [
-    {
-      title: "Student No",
-      dataIndex: "studentNo",
-      key: "studentNo",
-    },
     {
       title: "First Name",
       dataIndex: "firstName",
@@ -50,11 +42,11 @@ const ListStudents = (props) => {
       dataIndex: "address",
       key: "address",
     },
-    {
-      title: "City",
-      dataIndex: "city",
-      key: "city",
-    },
+    // {
+    //   title: "City",
+    //   dataIndex: "city",
+    //   key: "city",
+    // },
     {
       title: "PhoneNumber",
       dataIndex: "phoneNumber",
@@ -65,11 +57,11 @@ const ListStudents = (props) => {
       dataIndex: "email",
       key: "email",
     },
-    {
-      title: "program",
-      dataIndex: "program",
-      key: "program",
-    },
+    // {
+    //   title: "program",
+    //   dataIndex: "program",
+    //   key: "program",
+    // },
 
     {
       title: "Mutate",

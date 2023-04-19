@@ -7,14 +7,11 @@ const Schema = mongoose.Schema;
 //
 // Define a new 'UserSchema'
 var StudentSchema = new Schema({
-  studentNo: {
-    type: String,
-    required: true,
-    unique: [true, "Student number must be unique"],
-  },
   password: {
     type: String,
     required: true,
+    trim: true,
+    unique: true,
   },
   firstName: {
     type: String,
@@ -25,25 +22,27 @@ var StudentSchema = new Schema({
   address: {
     type: String,
   },
-  city: {
-    type: String,
-  },
+  // city: {
+  //   type: String,
+  // },
   phoneNumber: {
     type: String,
   },
   email: {
     type: String,
-    unique: true,
+    required: true,
+    trim: true,
+    unique: [true, "email number must be unique"],
   },
-  program: {
-    type: String,
-  },
-  courses: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Student",
-    },
-  ],
+  // program: {
+  //   type: String,
+  // },
+  // courses: [
+  //   {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: "Student",
+  //   },
+  // ],
 });
 
 // Set the 'fullname' virtual property

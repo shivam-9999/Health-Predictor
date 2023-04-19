@@ -9,8 +9,8 @@ import Button from "react-bootstrap/Button";
 import axios from "axios";
 
 const LOGIN = gql`
-  mutation authenticate($studentNo: String!, $password: String!) {
-    authenticate(studentNo: $studentNo, password: $password) {
+  mutation authenticate($email: String!, $password: String!) {
+    authenticate(email: $email, password: $password) {
       _id
       token
     }
@@ -19,11 +19,11 @@ const LOGIN = gql`
 
 const UserLogin = () => {
   const history = useHistory();
-  const [studentNo, setStudentNo] = useState("");
+  const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
 
   const [login, { loading, error, data }] = useMutation(LOGIN);
-
+  console.log(password);
   if (error) {
     return `Login Failed! ${error.message}`;
     history.push(`/login`);
@@ -45,8 +45,8 @@ const UserLogin = () => {
         <div>
           Student No : &nbsp;&nbsp;&nbsp;
           <input
-            value={studentNo}
-            onChange={(event) => setStudentNo(event.target.value)}
+            value={email}
+            onChange={(event) => setemail(event.target.value)}
           />
           {/* Input box to input password */}
         </div>
@@ -54,6 +54,7 @@ const UserLogin = () => {
         <div>
           Password :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <input
+            type="password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
           />
@@ -70,7 +71,7 @@ const UserLogin = () => {
         <Button
           variant="primary"
           type="submit"
-          onClick={() => login({ variables: { studentNo, password } })}
+          onClick={() => login({ variables: { email, password } })}
         >
           Log in
         </Button>

@@ -17,9 +17,9 @@ const studentType = new GraphQLObjectType({
       _id: {
         type: GraphQLString,
       },
-      studentNo: {
-        type: GraphQLString,
-      },
+      // studentNo: {
+      //   type: GraphQLString,
+      // },
       password: {
         type: GraphQLString,
       },
@@ -32,18 +32,18 @@ const studentType = new GraphQLObjectType({
       address: {
         type: GraphQLString,
       },
-      city: {
-        type: GraphQLString,
-      },
+      // city: {
+      //   type: GraphQLString,
+      // },
       phoneNumber: {
         type: GraphQLString,
       },
       email: {
         type: GraphQLString,
       },
-      program: {
-        type: GraphQLString,
-      },
+      // program: {
+      //   type: GraphQLString,
+      // },
       token: {
         type: GraphQLString,
       },
@@ -84,9 +84,9 @@ const Mutation = {
   signUp: {
     type: studentType,
     args: {
-      studentNo: {
-        type: new GraphQLNonNull(GraphQLString),
-      },
+      // studentNo: {
+      //   type: new GraphQLNonNull(GraphQLString),
+      // },
       firstName: {
         type: new GraphQLNonNull(GraphQLString),
       },
@@ -99,18 +99,18 @@ const Mutation = {
       address: {
         type: new GraphQLNonNull(GraphQLString),
       },
-      city: {
-        type: new GraphQLNonNull(GraphQLString),
-      },
+      // city: {
+      //   type: new GraphQLNonNull(GraphQLString),
+      // },
       phoneNumber: {
         type: new GraphQLNonNull(GraphQLString),
       },
       email: {
         type: new GraphQLNonNull(GraphQLString),
       },
-      program: {
-        type: new GraphQLNonNull(GraphQLString),
-      },
+      // program: {
+      //   type: new GraphQLNonNull(GraphQLString),
+      // },
     },
     resolve: async (root, params) => {
       const hashed = await bcrypt.hashSync(params.password, 10);
@@ -131,7 +131,7 @@ const Mutation = {
   authenticate: {
     type: studentType,
     args: {
-      studentNo: {
+      email: {
         type: new GraphQLNonNull(GraphQLString),
       },
       password: {
@@ -140,7 +140,7 @@ const Mutation = {
     },
     resolve: async (root, params) => {
       const user = await StudentModel.findOne({
-        studentNo: params.studentNo,
+        email: params.email,
       }).exec();
       console.log(user, user);
       if (!user) {
@@ -153,7 +153,7 @@ const Mutation = {
         throw new Error("Password did not match!");
       }
       return {
-        token: jwt.sign({ _id: user._id, studentNo: user.studentNo }, jwtKey, {
+        token: jwt.sign({ _id: user._id, email: user.email }, jwtKey, {
           algorithm: "HS256",
           expiresIn: jwtExpirySeconds,
         }),
@@ -169,9 +169,9 @@ const Mutation = {
         name: "id",
         type: new GraphQLNonNull(GraphQLString),
       },
-      studentNo: {
-        type: GraphQLString,
-      },
+      // studentNo: {
+      //   type: GraphQLString,
+      // },
       firstName: {
         type: GraphQLString,
       },
@@ -181,31 +181,31 @@ const Mutation = {
       address: {
         type: GraphQLString,
       },
-      city: {
-        type: GraphQLString,
-      },
+      // city: {
+      //   type: GraphQLString,
+      // },
       phoneNumber: {
         type: GraphQLString,
       },
       email: {
         type: GraphQLString,
       },
-      program: {
-        type: GraphQLString,
-      },
+      // program: {
+      //   type: GraphQLString,
+      // },
     },
     resolve(root, params) {
       return StudentModel.findByIdAndUpdate(
         params.id,
         {
-          studentNo: params.studentNo,
+          // studentNo: params.studentNo,
           firstName: params.firstName,
           lastName: params.lastName,
           address: params.address,
           city: params.city,
           phoneNumber: params.phoneNumber,
           email: params.email,
-          program: params.program,
+          // program: params.program,
         },
         function (err) {
           if (err) return next(err);
