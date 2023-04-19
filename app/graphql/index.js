@@ -1,7 +1,7 @@
 var GraphQLSchema = require("graphql").GraphQLSchema;
 var GraphQLObjectType = require("graphql").GraphQLObjectType;
 
-var { studentQuery, studentMutation } = require("./studentSchemas");
+var { studentQuery, studentMutation } = require("./patientSchemas.js");
 
 var { courseQuery, courseMutation } = require("./courseSchemas.js");
 
