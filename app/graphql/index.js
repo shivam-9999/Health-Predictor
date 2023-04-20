@@ -7,6 +7,7 @@ var { healthQuery, healthMutation } = require("./healthSchemas.js");
 var { emergencyQuery, emergencyMutation } = require("./emergencySchemas.js");
 var { tipQuery, tipMutation } = require("./tipSchemas.js");
 var { symptomQuery, symptomMutation } = require("./symptomSchemas.js");
+var { motivationalVideoQuery, motivationalVideoMutation } = require("./motivationalVideoSchemas.js");
 
 const queryType = new GraphQLObjectType({
   name: "Query",
@@ -18,6 +19,7 @@ const queryType = new GraphQLObjectType({
       ...emergencyQuery,
       ...tipQuery,
       ...symptomQuery,
+      ...motivationalVideoQuery,
     };
   },
 });
@@ -32,6 +34,7 @@ const mutation = new GraphQLObjectType({
       ...emergencyMutation,
       ...tipMutation,
       ...symptomMutation,
+      ...motivationalVideoMutation,
     };
   },
 });
