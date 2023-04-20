@@ -14,7 +14,7 @@ const GraphQLFloat = require("graphql").GraphQLFloat;
 const HealthPatientModel = require("../models/healthPatientModel");
 
 const healthType = new GraphQLObjectType({
-  name: "Health",
+  name: "HealthPatient",
   fields: function () {
     return {
       _id: {
@@ -49,7 +49,7 @@ const healthType = new GraphQLObjectType({
 });
 
 const queryType = {
-  healths: {
+  healthPatients: {
     type: new GraphQLList(healthType),
     resolve: function () {
       const healths = HealthPatientModel.find().exec();
@@ -60,7 +60,7 @@ const queryType = {
     },
   },
 
-  health: {
+  healthPatient: {
     type: healthType,
     args: {
       id: {
