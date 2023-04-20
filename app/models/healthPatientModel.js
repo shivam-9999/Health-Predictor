@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const HealthSchema = new Schema({
+const HealthPatientSchema = new Schema({
   heart_rate: {
     type: Number,
     required: [true, "Please add a pulse rate"],
@@ -36,4 +36,4 @@ const HealthSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model("Health", HealthSchema);
+module.exports = mongoose.model("HealthPatient", HealthPatientSchema);

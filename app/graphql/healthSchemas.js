@@ -11,7 +11,7 @@ const GraphQLNonNull = require("graphql").GraphQLNonNull;
 const GraphQLString = require("graphql").GraphQLString;
 const GraphQLFloat = require("graphql").GraphQLFloat;
 
-const HealthModel = require("../models/healthModel");
+const HealthPatientModel = require("../models/healthPatientModel");
 
 const healthType = new GraphQLObjectType({
   name: "Health",
@@ -52,7 +52,7 @@ const queryType = {
   healths: {
     type: new GraphQLList(healthType),
     resolve: function () {
-      const healths = HealthModel.find().exec();
+      const healths = HealthPatientModel.find().exec();
       if (!healths) {
         throw new Error("Healths not found");
       }
@@ -68,7 +68,7 @@ const queryType = {
       },
     },
     resolve: function (root, params) {
-      const health = HealthModel.findById(params.id).exec();
+      const health = HealthPatientModel.findById(params.id).exec();
       if (!health) {
         throw new Error("Health not found");
       }
@@ -235,9 +235,9 @@ const Mutation = {
       },
     },
     resolve: async function (root, params) {
-      const healthModel = new HealthModel(params);
+      const healthPatientModel = new HealthPatientModel(params);
 
-      const newHealth = await healthModel.save();
+      const newHealth = await healthPatientModel.save();
       if (!newHealth) {
         throw new Error("Could not save the health data!");
       }
@@ -275,7 +275,7 @@ const Mutation = {
       },
     },
     resolve: async function (root, params) {
-      return await HealthModel.findByIdAndUpdate(
+      return await HealthPatientModel.findByIdAndUpdate(
         params.id,
         {
           patient: params.patient,
@@ -301,7 +301,7 @@ const Mutation = {
       },
     },
     resolve: async function (root, params) {
-      const removedHealth = await HealthModel.findByIdAndRemove(params.id).exec();
+      const removedHealth = await HealthPatientModel.findByIdAndRemove(params.id).exec();
       if (!removedHealth) {
         throw new Error("Error removing health data");
       }
