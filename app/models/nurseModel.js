@@ -2,7 +2,13 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const NurseSchema = new Schema({
-    password:{  
+    email: {
+        type: String,
+        required: true,
+        trim: true,
+        unique: [true, "email address must be unique"],
+    },
+    password: {  
         type: String,
         required: true,
         trim: true,
@@ -17,12 +23,9 @@ const NurseSchema = new Schema({
     address: {
         type: String,
     },
-    nurseEmail: {
-        type: String,
-        required: true,
-        trim: true,
-        unique: [true, "email address must be unique"],
-    }
+    phoneNumber: {
+      type: String,
+    },
 });
 
 NurseSchema.virtual("fullName")

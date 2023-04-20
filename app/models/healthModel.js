@@ -3,50 +3,36 @@ const Schema = mongoose.Schema;
 
 const HealthSchema = new Schema({
   heart_rate: {
-    type: String,
+    type: Number,
     required: [true, "Please add a pulse rate"],
   },
   systolic_pressure: {
-    type: String,
+    type: Number,
     required: [true, "Please add a blood pressure"],
   },
   diastolic_pressure: {
-    type: String,
+    type: Number,
     required: [true, "Please add a blood pressure"],
   },
-  
   body_temperature: {
-    type: String,
+    type: Number,
     required: [true, "Please add a temperature"],
   },
   respiratory_rate: {
-    type: String,
+    type: Number,
     required: [true, "Please add a respiratory rate"],
   },
   weight: {
-    type: String,
+    type: Number,
     required: [true, "Please add a weight"],
   },
-  commonSymptoms: [
-    {
-      type: String,
-      enum: [
-        "Fever",
-        "Cough",
-        "Shortness of breath",
-        "Fatigue",
-        "Body aches",
-        "Loss of taste or smell",
-        "Sore throat",
-        "Headache",
-        "Runny or stuffy nose",
-        "Nausea or vomiting",
-        "Diarrhea",
-      ],
-    },
-  ],
-  emergencyAlert: {
-    type: String,
+  timestamp: {
+    type: Date,
+    default: Date.now,
+  },
+  patient: {
+    type: Schema.Types.ObjectId,
+    ref: "Patient",
   },
 });
 

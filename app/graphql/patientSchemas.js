@@ -79,7 +79,7 @@ const queryType = {
 };
 
 const Mutation = {
-  signUp: {
+  signUpPatient: {
     type: patientType,
     args: {
       // studentNo: {
@@ -114,13 +114,13 @@ const Mutation = {
 
       const newPatient = patientModel.save();
       if (!newPatient) {
-        throw new Error("Could not save the student!");
+        throw new Error("Could not save the patient!");
       }
       return newPatient;
     },
   },
 
-  authenticate: {
+  loginPatient: {
     type: patientType,
     args: {
       email: {
@@ -131,27 +131,45 @@ const Mutation = {
       },
     },
     resolve: async (root, params) => {
-      const user = await PatientModel.findOne({
+      const patient = await PatientModel.findOne({
         email: params.email,
       }).exec();
-      console.log(user, user);
-      if (!user) {
+      if (!patient) {
         throw new Error("Login failed!");
       }
 
-      const valid = await bcrypt.compareSync(params.password, user.password);
+      const valid = await bcrypt.compareSync(params.password, patient.password);
 
       if (!valid) {
         throw new Error("Password did not match!");
       }
+
+      const token = jwt.sign({ _id: patient._id }, jwtKey, {
+        algorithm: "HS256",
+        expiresIn: jwtExpirySeconds,
+      });
+
       return {
-        token: jwt.sign({ _id: user._id, email: user.email }, jwtKey, {
-          algorithm: "HS256",
-          expiresIn: jwtExpirySeconds,
-        }),
-        _id: user.id,
+        token,
       };
     },
+  },
+  verifyPatient: { 
+      type: patientType,
+      args: {
+          token: {
+              type: new GraphQLNonNull(GraphQLString),
+          },
+      },
+      resolve: async function (root, params) {
+          const { _id } = jwt.verify(params.token, jwtKey);
+
+          const patient = await PatientModel.findById(_id).exec();
+          if (!patient) {
+              throw new Error("Patient not found");
+          }
+          return patient;
+      }
   },
 
   deletePatient: {
@@ -164,7 +182,7 @@ const Mutation = {
     resolve(root, params) {
       const deletePatient = PatientModel.findByIdAndRemove(params.id).exec();
       if (!deletePatient) {
-        throw new Error("Could not delete the student!");
+        throw new Error("Could not delete the patient!");
       }
       return deletePatient;
     },

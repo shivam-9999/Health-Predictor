@@ -16,6 +16,9 @@ const nurseType = new GraphQLObjectType({
             _id: {
                 type: GraphQLString,
             },
+            email: {
+                type: GraphQLString,
+            },
             password: {
                 type: GraphQLString,
             },
@@ -28,10 +31,7 @@ const nurseType = new GraphQLObjectType({
             address: {
                 type: GraphQLString,
             },
-            nurseEmail: {
-                type: GraphQLString,
-            },
-            token: {
+            phoneNumber: {
                 type: GraphQLString,
             },
         };
@@ -69,34 +69,47 @@ const queryType = {
 };
 
 const Mutation ={
-    addNurse: {
+    signUpNurse: {
         type: nurseType,
         args: {
-            password: {
-                type: new GraphQLNonNull(GraphQLString),
-            },
-            firstName: {
-                type: new GraphQLNonNull(GraphQLString),
-            },
-            lastName: {
-                type: new GraphQLNonNull(GraphQLString),
-            },
-            address: {
-                type: new GraphQLNonNull(GraphQLString),
-            },
-            nurseEmail: {
-                type: new GraphQLNonNull(GraphQLString),
-            },
+          // studentNo: {
+          //   type: new GraphQLNonNull(GraphQLString),
+          // },
+          firstName: {
+            type: new GraphQLNonNull(GraphQLString),
+          },
+          lastName: {
+            type: new GraphQLNonNull(GraphQLString),
+          },
+          password: {
+            type: new GraphQLNonNull(GraphQLString),
+          },
+          address: {
+            type: new GraphQLNonNull(GraphQLString),
+          },
+          phoneNumber: {
+            type: new GraphQLNonNull(GraphQLString),
+          },
+          email: {
+            type: new GraphQLNonNull(GraphQLString),
+          },
         },
-        resolve: async function (root, params) {
-            const nurseModel = new NurseModel(params);
-            const newUser = await nurseModel.save();
-            if (!newUser) {
-                throw new Error("Error");
-            }
-            return newUser;
-        }
+        resolve: async (root, params) => {
+          const hashed = await bcrypt.hashSync(params.password, 10);
+    
+          const nurseModel = new NurseModel({
+            ...params,
+            password: hashed,
+          });
+    
+          const newNurse = nurseModel.save();
+          if (!newNurse) {
+            throw new Error("Could not save the nurse!");
+          }
+          return newNurse;
+        },
     },
+
     updateNurse: {
         type: nurseType,
         args: {
@@ -104,6 +117,9 @@ const Mutation ={
                 name: "id",
                 type: new GraphQLNonNull(GraphQLString)
             },
+            email: {
+                type: new GraphQLNonNull(GraphQLString),
+            },
             password: {
                 type: new GraphQLNonNull(GraphQLString),
             },
@@ -116,12 +132,12 @@ const Mutation ={
             address: {
                 type: new GraphQLNonNull(GraphQLString),
             },
-            nurseEmail: {
+            phoneNumber: {
                 type: new GraphQLNonNull(GraphQLString),
             },
         },
         resolve: async function (root, params) {
-            return NurseModel.findByIdAndUpdate(params.id, { password: params.password, firstName: params.firstName, lastName: params.lastName, address: params.address, nurseEmail: params.nurseEmail }, function (err) {
+            return NurseModel.findByIdAndUpdate(params.id, { password: params.password, firstName: params.firstName, lastName: params.lastName, address: params.address, email: params.email }, function (err) {
                 if (err) return next(err);
             });
         }
@@ -154,7 +170,7 @@ const Mutation ={
             },
         },
         resolve: async function (root, params) {
-            const nurse = await NurseModel.findOne({ nurseEmail: params.nurseEmail });
+            const nurse = await NurseModel.findOne({ email: params.email });
             if (!nurse) {
                 throw new Error("Nurse not found");
             }
@@ -162,28 +178,14 @@ const Mutation ={
             if (!valid) {
                 throw new Error("Invalid password");
             }
-            const token = jwt.sign({ nurseEmail: nurse.nurseEmail }, jwtKey, {
+            const token = jwt.sign({ _id: nurse._id }, jwtKey, {
                 algorithm: "HS256",
                 expiresIn: jwtExpirySeconds,
             });
-            nurse.token = token;
-            return nurse;
-        }
-    },
-    logoutNurse: {
-        type: nurseType,
-        args: {
-            token: {
-                type: new GraphQLNonNull(GraphQLString),
-            },
-        },
-        resolve: async function (root, params) {
-            const nurse = await NurseModel.findOne({ token: params.token });
-            if (!nurse) {
-                throw new Error("Nurse not found");
-            }
-            nurse.token = "";
-            return nurse;
+
+            return {
+                token,
+            };
         }
     },
     verifyNurse: { 
@@ -194,7 +196,9 @@ const Mutation ={
             },
         },
         resolve: async function (root, params) {
-            const nurse = await NurseModel.findOne({ token: params.token });
+            const { _id } = jwt.verify(params.token, jwtKey);
+
+            const nurse = await NurseModel.findById(_id).exec();
             if (!nurse) {
                 throw new Error("Nurse not found");
             }

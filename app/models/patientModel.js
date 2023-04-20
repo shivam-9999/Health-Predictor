@@ -34,13 +34,6 @@ var PatientSchema = new Schema({
   phoneNumber: {
     type: String,
   },
-
-  userType: {
-    type: String,
-    required: true,
-    enum: ["patient", "nurse"],
-    default: "patient",
-  },
 });
 
 // Set the 'fullname' virtual property
