@@ -4,7 +4,7 @@ const GraphQLNonNull = require("graphql").GraphQLNonNull;
 const GraphQLString = require("graphql").GraphQLString;
 const mongoose = require("mongoose");
 
-const HealthModel = require("../models/HealthModel");
+const HealthPatientModel = require("../models/HealthPatientModel");
 
 const healthType = new GraphQLObjectType({
   name: "HealthPatient",
@@ -39,18 +39,18 @@ const healthType = new GraphQLObjectType({
 });
 
 const queryType = {
-  healths: {
+  healthsPatient: {
     type: new GraphQLList(healthType),
     resolve: function () {
-      const healths = HealthModel.find().exec();
-      if (!healths) {
-        throw new Error("Healths not found");
+      const healthsPatient = HealthPatientModel.find().exec();
+      if (!healthsPatient) {
+        throw new Error("HealthsPatient not found");
       }
-      return healths;
+      return healthsPatient;
     },
   },
 
-  health: {
+  healthPatient: {
     type: healthType,
     args: {
       id: {
@@ -58,7 +58,7 @@ const queryType = {
       },
     },
     resolve: function (root, params) {
-      const health = HealthModel.findById(params.id).exec();
+      const health = HealthPatientModel.findById(params.id).exec();
       if (!health) {
         throw new Error("Health not found");
       }
@@ -94,9 +94,9 @@ const Mutation = {
       },
     },
     resolve: async function (root, params) {
-      const healthModel = new HealthModel(params);
+      const healthPatientModel = new HealthPatientModel(params);
 
-      const newHealth = await healthModel.save();
+      const newHealth = await healthPatientModel.save();
       if (!newHealth) {
         throw new Error("Could not save the health data!");
       }

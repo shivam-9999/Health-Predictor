@@ -3,7 +3,7 @@ var GraphQLObjectType = require("graphql").GraphQLObjectType;
 
 var { patientQuery, patientMutation } = require("./patientSchemas.js.js");
 
-var { healthQuery, healthMutation } = require("./HealthSchemas.js");
+var { healthQuery, healthMutation } = require("./HealthPatient.js");
 
 const queryType = new GraphQLObjectType({
   name: "Query",
