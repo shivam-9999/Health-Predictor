@@ -7,6 +7,12 @@ const Schema = mongoose.Schema;
 //
 // Define a new 'UserSchema'
 var PatientSchema = new Schema({
+  email: {
+    type: String,
+    required: true,
+    trim: true,
+    unique: [true, "email number must be unique"],
+  },
   password: {
     type: String,
     required: true,
@@ -28,11 +34,12 @@ var PatientSchema = new Schema({
   phoneNumber: {
     type: String,
   },
-  email: {
+
+  userType: {
     type: String,
     required: true,
-    trim: true,
-    unique: [true, "email number must be unique"],
+    enum: ["patient", "nurse"],
+    default: "patient",
   },
 });
 

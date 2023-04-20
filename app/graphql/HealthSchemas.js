@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 const HealthModel = require("../models/HealthModel");
 
 const healthType = new GraphQLObjectType({
-  name: "Health",
+  name: "HealthPatient",
   fields: function () {
     return {
       _id: {
@@ -68,7 +68,7 @@ const queryType = {
 };
 
 const Mutation = {
-  createHealth: {
+  createHealthPatient: {
     type: healthType,
     args: {
       pulseRate: {
