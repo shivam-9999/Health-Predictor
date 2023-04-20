@@ -50,11 +50,6 @@ module.exports = function () {
         resave: true,
         secret: config.sessionSecret
     }));
-    //Configure Express to use EJS module as the default template engine
-    // Set the application view engine and 'views' folder
-    app.set('views', './app/views');
-    app.set('view engine', 'ejs');
-    app.engine('html', require('ejs').renderFile);
     //bootstrap the app using the controller and routing modules
     // Load the routing files
 //    require('../app/routes/index.server.routes.js')(app);

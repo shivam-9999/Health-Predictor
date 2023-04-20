@@ -162,7 +162,7 @@ const Mutation ={
     loginNurse: {
         type: nurseType,
         args: {
-            nurseEmail: {
+            email: {
                 type: new GraphQLNonNull(GraphQLString),
             },
             password: {
@@ -207,9 +207,9 @@ const Mutation ={
     },
 };
 
-module.exports = new GraphQLObjectType({
+module.exports = {
     nurseQuery: queryType, 
     nurseMutation: Mutation,
-});
+};
 
 
