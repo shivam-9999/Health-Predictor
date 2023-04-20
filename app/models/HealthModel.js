@@ -3,23 +3,23 @@ const Schema = mongoose.Schema;
 
 const HealthSchema = new Schema({
   pulseRate: {
-    type: Number,
+    type: String,
     required: [true, "Please add a pulse rate"],
   },
   bloodPressure: {
-    type: Number,
+    type: String,
     required: [true, "Please add a blood pressure"],
   },
   weight: {
-    type: Number,
+    type: String,
     required: [true, "Please add a weight"],
   },
   temperature: {
-    type: Number,
+    type: String,
     required: [true, "Please add a temperature"],
   },
   respiratoryRate: {
-    type: Number,
+    type: String,
     required: [true, "Please add a respiratory rate"],
   },
   commonSymptoms: [
@@ -40,6 +40,9 @@ const HealthSchema = new Schema({
       ],
     },
   ],
+  emergencyAlert: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model("Health", HealthSchema);

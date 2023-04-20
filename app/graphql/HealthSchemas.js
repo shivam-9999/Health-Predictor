@@ -31,6 +31,9 @@ const healthType = new GraphQLObjectType({
       commonSymptoms: {
         type: new GraphQLList(GraphQLString),
       },
+      emergencyAlert: {
+        type: GraphQLString,
+      },
     };
   },
 });
@@ -86,11 +89,14 @@ const Mutation = {
       commonSymptoms: {
         type: new GraphQLList(GraphQLString),
       },
+      emergencyAlert: {
+        type: GraphQLString,
+      },
     },
-    resolve: function (root, params) {
+    resolve: async function (root, params) {
       const healthModel = new HealthModel(params);
 
-      const newHealth = healthModel.save();
+      const newHealth = await healthModel.save();
       if (!newHealth) {
         throw new Error("Could not save the health data!");
       }
@@ -98,7 +104,6 @@ const Mutation = {
     },
   },
 };
-
 module.exports = {
   healthQuery: queryType,
   healthMutation: Mutation,
