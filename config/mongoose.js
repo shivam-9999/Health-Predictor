@@ -17,9 +17,6 @@ module.exports = function () {
     });
   mongoose.set("useFindAndModify", false);
 
-  // Load the 'student' model
-  require("../app/models/patientModel");
-
   // Return the Mongoose connection instance
   return db;
 };
