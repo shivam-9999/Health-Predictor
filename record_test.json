@@ -1,0 +1,10 @@
+[
+    {
+        "body_temperature": 97.8,
+        "heart_rate": 60,
+        "systolic_pressure": 120,
+        "diastolic_pressure": 80,
+        "respiratory_rate": 12,
+        "status": 1
+    }
+]
