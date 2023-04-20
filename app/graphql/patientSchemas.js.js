@@ -10,8 +10,8 @@ const jwtKey = config.secretKey;
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcrypt");
 
-const studentType = new GraphQLObjectType({
-  name: "student",
+const patientType = new GraphQLObjectType({
+  name: "patient",
   fields: function () {
     return {
       _id: {
@@ -50,37 +50,37 @@ const studentType = new GraphQLObjectType({
 });
 
 const queryType = {
-  students: {
-    type: new GraphQLList(studentType),
+  patients: {
+    type: new GraphQLList(patientType),
     resolve: function () {
-      const students = PatientModel.find().exec();
-      if (!students) {
-        throw new Error("Students not found");
+      const patients = PatientModel.find().exec();
+      if (!patients) {
+        throw new Error("patients not found");
       }
-      return students;
+      return patients;
     },
   },
 
-  student: {
-    type: studentType,
+  patient: {
+    type: patientType,
     args: {
       id: {
         type: new GraphQLNonNull(GraphQLString),
       },
     },
     resolve: function (root, params) {
-      const student = PatientModel.findById(params.id).exec();
-      if (!student) {
-        throw new Error("Student not found");
+      const patient = PatientModel.findById(params.id).exec();
+      if (!patient) {
+        throw new Error("patient not found");
       }
-      return student;
+      return patient;
     },
   },
 };
 
 const Mutation = {
   signUp: {
-    type: studentType,
+    type: patientType,
     args: {
       // studentNo: {
       //   type: new GraphQLNonNull(GraphQLString),
@@ -97,9 +97,6 @@ const Mutation = {
       address: {
         type: new GraphQLNonNull(GraphQLString),
       },
-      // city: {
-      //   type: new GraphQLNonNull(GraphQLString),
-      // },
       phoneNumber: {
         type: new GraphQLNonNull(GraphQLString),
       },
@@ -115,16 +112,16 @@ const Mutation = {
         password: hashed,
       });
 
-      const newStudent = patientModel.save();
-      if (!newStudent) {
+      const newPatient = patientModel.save();
+      if (!newPatient) {
         throw new Error("Could not save the student!");
       }
-      return newStudent;
+      return newPatient;
     },
   },
 
   authenticate: {
-    type: studentType,
+    type: patientType,
     args: {
       email: {
         type: new GraphQLNonNull(GraphQLString),
@@ -157,72 +154,24 @@ const Mutation = {
     },
   },
 
-  updateStudent: {
-    type: studentType,
-    args: {
-      id: {
-        name: "id",
-        type: new GraphQLNonNull(GraphQLString),
-      },
-      // studentNo: {
-      //   type: GraphQLString,
-      // },
-      firstName: {
-        type: GraphQLString,
-      },
-      lastName: {
-        type: GraphQLString,
-      },
-      address: {
-        type: GraphQLString,
-      },
-      // city: {
-      //   type: GraphQLString,
-      // },
-      phoneNumber: {
-        type: GraphQLString,
-      },
-      email: {
-        type: GraphQLString,
-      },
-    },
-    resolve(root, params) {
-      return PatientModel.findByIdAndUpdate(
-        params.id,
-        {
-          // studentNo: params.studentNo,
-          firstName: params.firstName,
-          lastName: params.lastName,
-          address: params.address,
-          city: params.city,
-          phoneNumber: params.phoneNumber,
-          email: params.email,
-        },
-        function (err) {
-          if (err) return next(err);
-        }
-      );
-    },
-  },
-
-  deleteStudent: {
-    type: studentType,
+  deletePatient: {
+    type: patientType,
     args: {
       id: {
         type: new GraphQLNonNull(GraphQLString),
       },
     },
     resolve(root, params) {
-      const deleteStudent = PatientModel.findByIdAndRemove(params.id).exec();
-      if (!deleteStudent) {
+      const deletePatient = PatientModel.findByIdAndRemove(params.id).exec();
+      if (!deletePatient) {
         throw new Error("Could not delete the student!");
       }
-      return deleteStudent;
+      return deletePatient;
     },
   },
 };
 
 module.exports = {
-  studentQuery: queryType,
-  studentMutation: Mutation,
+  patientQuery: queryType,
+  patientMutation: Mutation,
 };

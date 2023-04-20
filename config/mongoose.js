@@ -15,11 +15,11 @@ module.exports = function () {
     .catch((err) => {
       console.log("Error");
     });
+  mongoose.set("useFindAndModify", false);
 
   // Load the 'student' model
   require("../app/models/patientModel");
-  // Load the 'course' model
-  require("../app/models/courseModel");
+
   // Return the Mongoose connection instance
   return db;
 };
