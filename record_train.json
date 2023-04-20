@@ -1,0 +1,82 @@
+[
+    {
+        "body_temperature": 97.8,
+        "heart_rate": 60,
+        "systolic_pressure": 120,
+        "diastolic_pressure": 80,
+        "respiratory_rate": 12,
+        "status": 1
+    },
+    {
+        "body_temperature": 98.8,
+        "heart_rate": 65,
+        "systolic_pressure": 110,
+        "diastolic_pressure": 74,
+        "respiratory_rate": 15,
+        "status": 1
+    },
+    {
+        "body_temperature": 98.0,
+        "heart_rate": 75,
+        "systolic_pressure": 105,
+        "diastolic_pressure": 69,
+        "respiratory_rate": 18,
+        "status": 1
+    },
+    {
+        "body_temperature": 99.1,
+        "heart_rate": 80,
+        "systolic_pressure": 120,
+        "diastolic_pressure": 80,
+        "respiratory_rate": 20,
+        "status": 1
+    },
+    {
+        "body_temperature": 104.5,
+        "heart_rate": 85,
+        "systolic_pressure": 140,
+        "diastolic_pressure": 90,
+        "respiratory_rate": 25,
+        "status": 2
+    },
+    {
+        "body_temperature": 99.1,
+        "heart_rate": 80,
+        "systolic_pressure": 139,
+        "diastolic_pressure": 89,
+        "respiratory_rate": 20,
+        "status": 2
+    },
+    {
+        "body_temperature": 95.8,
+        "heart_rate": 45,
+        "systolic_pressure": 122,
+        "diastolic_pressure": 85,
+        "respiratory_rate": 23,
+        "status": 2
+    },
+    {
+        "body_temperature": 97.5,
+        "heart_rate": 58,
+        "systolic_pressure": 128,
+        "diastolic_pressure": 85,
+        "respiratory_rate": 8,
+        "status": 2
+    },
+    {
+        "body_temperature": 98.1,
+        "heart_rate": 61,
+        "systolic_pressure": 107,
+        "diastolic_pressure": 65,
+        "respiratory_rate": 14,
+        "status": 1
+    },
+    {
+        "body_temperature": 98.9,
+        "heart_rate": 78,
+        "systolic_pressure": 98,
+        "diastolic_pressure": 61,
+        "respiratory_rate": 16,
+        "status": 1
+    }
+]
