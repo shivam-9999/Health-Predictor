@@ -2,30 +2,34 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const HealthSchema = new Schema({
-  heart_rate: {
+  patientId: {
+    type: String,
+    trim: true,
+  },
+  nurseId: {
+    type: String,
+    trim: true,
+  },
+  pulseRate: {
     type: String,
     required: [true, "Please add a pulse rate"],
   },
-  systolic_pressure: {
+  bloodPressure: {
     type: String,
     required: [true, "Please add a blood pressure"],
-  },
-  diastolic_pressure: {
-    type: String,
-    required: [true, "Please add a blood pressure"],
-  },
-  
-  body_temperature: {
-    type: String,
-    required: [true, "Please add a temperature"],
-  },
-  respiratory_rate: {
-    type: String,
-    required: [true, "Please add a respiratory rate"],
   },
   weight: {
     type: String,
-    required: [true, "Please add a weight"],
+    required: [true, "Please add a blood pressure"],
+  },
+
+  temperature: {
+    type: String,
+    required: [true, "Please add a temperature"],
+  },
+  respiratoryRate: {
+    type: String,
+    required: [true, "Please add a respiratory rate"],
   },
   commonSymptoms: [
     {

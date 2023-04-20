@@ -11,15 +11,17 @@ var jwt = require("jsonwebtoken");
 var bcrypt = require("bcrypt");
 
 const patientType = new GraphQLObjectType({
-  name: "patient",
+  name: "user",
   fields: function () {
     return {
+      userType: { type: GraphQLString },
       _id: {
         type: GraphQLString,
       },
       // studentNo: {
       //   type: GraphQLString,
       // },
+
       password: {
         type: GraphQLString,
       },
@@ -53,7 +55,7 @@ const queryType = {
   patients: {
     type: new GraphQLList(patientType),
     resolve: function () {
-      const patients = PatientModel.find().exec();
+      const patients = PatientModel.find({ userType: "patient" }).exec();
       if (!patients) {
         throw new Error("patients not found");
       }
@@ -76,6 +78,13 @@ const queryType = {
       return patient;
     },
   },
+  nurses: {
+    type: new GraphQLList(patientType),
+    resolve: async () => {
+      const nurses = await PatientModel.find({ userType: "nurses" });
+      return nurses;
+    },
+  },
 };
 
 const Mutation = {
@@ -85,6 +94,7 @@ const Mutation = {
       // studentNo: {
       //   type: new GraphQLNonNull(GraphQLString),
       // },
+      userType: { type: new GraphQLNonNull(GraphQLString) },
       firstName: {
         type: new GraphQLNonNull(GraphQLString),
       },
@@ -145,11 +155,16 @@ const Mutation = {
         throw new Error("Password did not match!");
       }
       return {
-        token: jwt.sign({ _id: user._id, email: user.email }, jwtKey, {
-          algorithm: "HS256",
-          expiresIn: jwtExpirySeconds,
-        }),
+        token: jwt.sign(
+          { _id: user._id, email: user.email, userType: user.userType },
+          jwtKey,
+          {
+            algorithm: "HS256",
+            expiresIn: jwtExpirySeconds,
+          }
+        ),
         _id: user.id,
+        userType: user.userType,
       };
     },
   },

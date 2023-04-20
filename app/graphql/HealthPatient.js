@@ -13,6 +13,8 @@ const healthType = new GraphQLObjectType({
       _id: {
         type: GraphQLString,
       },
+      patientId: { type: GraphQLString },
+      nurseId: { type: GraphQLString },
       pulseRate: {
         type: GraphQLString,
       },
@@ -39,7 +41,7 @@ const healthType = new GraphQLObjectType({
 });
 
 const queryType = {
-  healthsPatient: {
+  healths_Patient: {
     type: new GraphQLList(healthType),
     resolve: function () {
       const healthsPatient = HealthPatientModel.find().exec();
@@ -50,7 +52,7 @@ const queryType = {
     },
   },
 
-  healthPatient: {
+  health_Patient: {
     type: healthType,
     args: {
       id: {
@@ -71,6 +73,12 @@ const Mutation = {
   createHealthPatient: {
     type: healthType,
     args: {
+      patientId: {
+        type: new GraphQLNonNull(GraphQLString),
+      },
+      nurseId: {
+        type: new GraphQLNonNull(GraphQLString),
+      },
       pulseRate: {
         type: new GraphQLNonNull(GraphQLString),
       },
@@ -95,7 +103,6 @@ const Mutation = {
     },
     resolve: async function (root, params) {
       const healthPatientModel = new HealthPatientModel(params);
-
       const newHealth = await healthPatientModel.save();
       if (!newHealth) {
         throw new Error("Could not save the health data!");
