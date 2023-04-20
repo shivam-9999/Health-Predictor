@@ -6,7 +6,11 @@ const HealthSchema = new Schema({
     type: String,
     required: [true, "Please add a pulse rate"],
   },
-  bloodPressure: {
+  systolic_pressure: {
+    type: String,
+    required: [true, "Please add a blood pressure"],
+  },
+  diastolic_pressure: {
     type: String,
     required: [true, "Please add a blood pressure"],
   },
