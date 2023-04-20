@@ -197,4 +197,5 @@ const Mutation = {
 module.exports = {
   patientQuery: queryType,
   patientMutation: Mutation,
+  patientType: patientType,
 };

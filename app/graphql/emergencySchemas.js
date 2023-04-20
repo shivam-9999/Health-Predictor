@@ -5,6 +5,8 @@ const GraphQLString = require("graphql").GraphQLString;
 
 const EmergencyModel = require("../models/emergencyModel");
 
+const patientType = require("./patientSchemas").patientType;
+
 const emergencyType = new GraphQLObjectType({
   name: "Emergency",
   fields: function () {
@@ -13,7 +15,7 @@ const emergencyType = new GraphQLObjectType({
         type: GraphQLString,
       },
       patient: {
-        type: GraphQLString,
+        type: patientType,
       },
       concern: {
         type: GraphQLString,
@@ -29,7 +31,10 @@ const queryType = {
   emergencies: {
     type: new GraphQLList(emergencyType),
     resolve: function () {
-      const emergencies = EmergencyModel.find().exec();
+      const emergencies = EmergencyModel
+        .find()
+        .populate("patient")
+        .exec();
       if (!emergencies) {
         throw new Error("Emergencies not found");
       }
@@ -45,7 +50,10 @@ const queryType = {
       },
     },
     resolve: function (root, params) {
-      const emergency = EmergencyModel.findById(params.id).exec();
+      const emergency = EmergencyModel
+        .findById(params.id)
+        .populate("patient")
+        .exec();
       if (!emergency) {
         throw new Error("Emergency not found");
       }
@@ -72,6 +80,7 @@ const Mutation = {
       if (!newEmergency) {
         throw new Error("Could not save the emergency data!");
       }
+
       return newEmergency;
     },
   },
@@ -100,7 +109,7 @@ const Mutation = {
         function (err) {
           if (err) return next(err);
         }
-      );
+      ).exec();
     },
   },
 

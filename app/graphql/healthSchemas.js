@@ -13,6 +13,8 @@ const GraphQLFloat = require("graphql").GraphQLFloat;
 
 const HealthPatientModel = require("../models/healthPatientModel");
 
+const patientType = require("./patientSchemas").patientType;
+
 const healthType = new GraphQLObjectType({
   name: "HealthPatient",
   fields: function () {
@@ -21,7 +23,7 @@ const healthType = new GraphQLObjectType({
         type: GraphQLString,
       },
       patient: {
-        type: GraphQLString,
+        type: patientType,
       },
       heart_rate: {
         type: GraphQLFloat,
@@ -52,7 +54,26 @@ const queryType = {
   healthPatients: {
     type: new GraphQLList(healthType),
     resolve: function () {
-      const healths = HealthPatientModel.find().exec();
+      const healths = HealthPatientModel.find().populate("patient").exec();
+      if (!healths) {
+        throw new Error("Healths not found");
+      }
+      return healths;
+    },
+  },
+
+  healthPatientsByPatient: {
+    type: new GraphQLList(healthType),
+    args: {
+      patient: {
+        type: new GraphQLNonNull(GraphQLString),
+      },
+    },
+    resolve: function (root, params) {
+      const healths = HealthPatientModel
+        .find({ patient: params.patient })
+        .populate("patient")
+        .exec();
       if (!healths) {
         throw new Error("Healths not found");
       }
@@ -68,7 +89,10 @@ const queryType = {
       },
     },
     resolve: function (root, params) {
-      const health = HealthPatientModel.findById(params.id).exec();
+      const health = HealthPatientModel
+        .findById(params.id)
+        .populate("patient")
+        .exec();
       if (!health) {
         throw new Error("Health not found");
       }

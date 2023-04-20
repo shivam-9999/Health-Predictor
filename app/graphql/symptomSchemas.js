@@ -7,6 +7,8 @@ const GraphQLDate = require("graphql-iso-date").GraphQLDateTime;
 
 const SymptomModel = require("../models/symptomModel");
 
+const patientType = require("./patientSchemas").patientType;
+
 const symptomType = new GraphQLObjectType({
   name: "Symptom",
   fields: function () {
@@ -15,7 +17,7 @@ const symptomType = new GraphQLObjectType({
         type: GraphQLString,
       },
       patient: {
-        type: GraphQLString,
+        type: patientType,
       },
       fever: {
         type: GraphQLBoolean,
@@ -44,6 +46,24 @@ const queryType = {
     type: new GraphQLList(symptomType),
     resolve: function () {
       const symptoms = SymptomModel.find().populate("patient").exec();
+      if (!symptoms) {
+        throw new Error("Symptoms not found");
+      }
+      return symptoms;
+    },
+  },
+
+  symptomsByPatient: {
+    type: new GraphQLList(symptomType),
+    args: {
+      patient: {
+        type: new GraphQLNonNull(GraphQLString),
+      },
+    },
+    resolve: function (root, params) {
+      const symptoms = SymptomModel.find({ patient: params.patient })
+        .populate("patient")
+        .exec();
       if (!symptoms) {
         throw new Error("Symptoms not found");
       }
