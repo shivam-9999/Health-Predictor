@@ -41,6 +41,38 @@ const symptomType = new GraphQLObjectType({
   },
 });
 
+const symptomMutationType = new GraphQLObjectType({
+  name: "SymptomMutation",
+  fields: function () {
+    return {
+      _id: {
+        type: GraphQLString,
+      },
+      patient: {
+        type: GraphQLString,
+      },
+      fever: {
+        type: GraphQLBoolean,
+      },
+      cough: {
+        type: GraphQLBoolean,
+      },
+      breathing_difficulty: {
+        type: GraphQLBoolean,
+      },
+      headache: {
+        type: GraphQLBoolean,
+      },
+      sore_throat: {
+        type: GraphQLBoolean,
+      },
+      timestamp: {
+        type: GraphQLDate,
+      },
+    };
+  },
+});
+
 const queryType = {
   symptoms: {
     type: new GraphQLList(symptomType),
@@ -90,7 +122,7 @@ const queryType = {
 
 const Mutation = {
   createSymptom: {
-    type: symptomType,
+    type: symptomMutationType,
     args: {
       patient: {
         type: new GraphQLNonNull(GraphQLString),
@@ -123,7 +155,7 @@ const Mutation = {
   },
 
   updateSymptom: {
-    type: symptomType,
+    type: symptomMutationType,
     args: {
       id: {
         name: "id",
@@ -169,7 +201,7 @@ const Mutation = {
   },
 
   deleteSymptom: {
-    type: symptomType,
+    type: symptomMutationType,
     args: {
       id: {
         type: new GraphQLNonNull(GraphQLString),

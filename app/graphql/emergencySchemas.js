@@ -27,12 +27,51 @@ const emergencyType = new GraphQLObjectType({
   },
 });
 
+const emergencyMutationType = new GraphQLObjectType({
+  name: "EmergencyMutation",
+  fields: function () {
+    return {
+      _id: {
+        type: GraphQLString,
+      },
+      patient: {
+        type: GraphQLString,
+      },
+      concern: {
+        type: GraphQLString,
+      },
+      timestamp: {
+        type: GraphQLString,
+      },
+    };
+  },
+});
+
 const queryType = {
   emergencies: {
     type: new GraphQLList(emergencyType),
     resolve: function () {
       const emergencies = EmergencyModel
         .find()
+        .populate("patient")
+        .exec();
+      if (!emergencies) {
+        throw new Error("Emergencies not found");
+      }
+      return emergencies;
+    },
+  },
+
+  emergenciesByPatient: {
+    type: new GraphQLList(emergencyType),
+    args: {
+      patient: {
+        type: new GraphQLNonNull(GraphQLString),
+      },
+    },
+    resolve: function (root, params) {
+      const emergencies = EmergencyModel
+        .find({ patient: params.patient })
         .populate("patient")
         .exec();
       if (!emergencies) {
@@ -64,7 +103,7 @@ const queryType = {
 
 const Mutation = {
   createEmergency: {
-    type: emergencyType,
+    type: emergencyMutationType,
     args: {
       patient: {
         type: new GraphQLNonNull(GraphQLString),
@@ -86,7 +125,7 @@ const Mutation = {
   },
 
   updateEmergency: {
-    type: emergencyType,
+    type: emergencyMutationType,
     args: {
       id: {
         name: "id",
@@ -114,7 +153,7 @@ const Mutation = {
   },
 
   deleteEmergency: {
-    type: emergencyType,
+    type: emergencyMutationType,
     args: {
       id: {
         type: new GraphQLNonNull(GraphQLString),

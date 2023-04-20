@@ -50,6 +50,41 @@ const healthType = new GraphQLObjectType({
   },
 });
 
+const healthMutationType = new GraphQLObjectType({
+  name: "HealthPatientMutation",
+  fields: function () {
+    return {
+      _id: {
+        type: GraphQLString,
+      },
+      patient: {
+        type: GraphQLString,
+      },
+      heart_rate: {
+        type: GraphQLFloat,
+      },
+      systolic_pressure: {
+        type: GraphQLFloat,
+      },
+      diastolic_pressure: {
+        type: GraphQLFloat,
+      },
+      body_temperature: {
+        type: GraphQLFloat,
+      },
+      respiratory_rate: {
+        type: GraphQLFloat,
+      },
+      weight: {
+        type: GraphQLFloat,
+      },
+      timestamp: {
+        type: GraphQLString,
+      },
+    };
+  },
+});
+
 const queryType = {
   healthPatients: {
     type: new GraphQLList(healthType),
@@ -234,7 +269,7 @@ const queryType = {
 
 const Mutation = {
   createHealth: {
-    type: healthType,
+    type: healthMutationType,
     args: {
       patient: {
         type: new GraphQLNonNull(GraphQLString),
@@ -270,7 +305,7 @@ const Mutation = {
   },
 
   updateHealth: {
-    type: healthType,
+    type: healthMutationType,
     args: {
       id: {
         name: "id",
@@ -318,7 +353,7 @@ const Mutation = {
   },
 
   deleteHealth: {
-    type: healthType,
+    type: healthMutationType,
     args: {
       id: {
         type: new GraphQLNonNull(GraphQLString),
