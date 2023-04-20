@@ -161,9 +161,6 @@ const Mutation = {
         name: "id",
         type: new GraphQLNonNull(GraphQLString),
       },
-      patient: {
-        type: new GraphQLNonNull(GraphQLString),
-      },
       fever: {
         type: new GraphQLNonNull(GraphQLBoolean),
       },
@@ -184,7 +181,6 @@ const Mutation = {
       const symptom = await SymptomModel.findByIdAndUpdate(
         params.id,
         {
-          patient: params.patient,
           fever: params.fever,
           cough: params.cough,
           breathing_difficulty: params.breathing_difficulty,

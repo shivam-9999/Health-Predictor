@@ -311,9 +311,6 @@ const Mutation = {
         name: "id",
         type: new GraphQLNonNull(GraphQLString),
       },
-      patient: {
-        type: new GraphQLNonNull(GraphQLString),
-      },
       heart_rate: {
         type: new GraphQLNonNull(GraphQLFloat),
       },
@@ -337,7 +334,6 @@ const Mutation = {
       return await HealthPatientModel.findByIdAndUpdate(
         params.id,
         {
-          patient: params.patient,
           heart_rate: params.heart_rate,
           systolic_pressure: params.systolic_pressure,
           diastolic_pressure: params.diastolic_pressure,

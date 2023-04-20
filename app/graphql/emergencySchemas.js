@@ -131,9 +131,6 @@ const Mutation = {
         name: "id",
         type: new GraphQLNonNull(GraphQLString),
       },
-      patient: {
-        type: new GraphQLNonNull(GraphQLString),
-      },
       concern: {
         type: new GraphQLNonNull(GraphQLString),
       },
@@ -142,7 +139,6 @@ const Mutation = {
       return await EmergencyModel.findByIdAndUpdate(
         params.id,
         {
-          patient: params.patient,
           concern: params.concern,
         },
         function (err) {
