@@ -121,7 +121,12 @@ const Mutation = {
   },
 
   loginPatient: {
-    type: patientType,
+    type: new GraphQLObjectType({
+      name: "loginPatient",
+      fields: () => ({
+        token: { type: GraphQLString },
+      }),
+    }),
     args: {
       email: {
         type: new GraphQLNonNull(GraphQLString),

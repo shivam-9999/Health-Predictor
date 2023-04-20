@@ -160,7 +160,12 @@ const Mutation ={
     },
 
     loginNurse: {
-        type: nurseType,
+        type: new GraphQLObjectType({
+            name: "loginNurse",
+            fields: () => ({
+                token: { type: GraphQLString },
+            }),
+        }),
         args: {
             email: {
                 type: new GraphQLNonNull(GraphQLString),
