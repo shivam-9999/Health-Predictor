@@ -4,7 +4,7 @@
   "description": "Express react Example",
   "main": "server.js",
   "author": {
-    "name": "Alhilsingh rana"
+    "name": "Akhil Singh rana"
   },
   "dependencies": {
     "@tensorflow/tfjs": "^4.4.0",
